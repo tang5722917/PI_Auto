@@ -1,33 +1,32 @@
 import os
 import time
-PI_PATH = 'E:\\Project\\Script\\P\\PY_Test\\'
+PI_PATH = 'E://Project//Script//P//PY_Test//'
 os.chdir(PI_PATH)
-import Lib1
-from Lib1 import txt
-from Lib1 import Auto_PI_main
+print(os.path.abspath('PI_Auto.py'))
+from PI_Auto import PI_Auto_Lib1
 fo = open( PI_PATH+"Auto_PI.txt",'r')
-n = 0
 PG_state = 0
 Lcap = list()
 Lpart = list()
 Net_input = ''
-fl = txt("Auto_PI.log","#Auto_PI.log",PI_PATH)
-fl.writelines('Time: '+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'\n' )
+n = 0
+fl = PI_Auto_Lib1.txt("Auto_PI.log","#Auto_PI.log",PI_PATH)
+print('Time: '+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'\n',file=fl)
 for line in fo.readlines():
     n = n + 1
     if (line == "<Caps>\n") & (PG_state == 0):
         PG_state = 1
-        fl.writelines("Adjustment capcitors' partname List:\n")
+        print("Adjustment capcitors' partname List:\n",file=fl)
     elif (line == "<Ref>\n") & (PG_state == 1):
         PG_state = 2
-        fl.writelines("Type of the adjsutment capcitors:"+str(len(Lcap))+'\n')
-        fl.writelines("Adjustment capcitors' ref List:\n")
+        print("Type of the adjsutment capcitors:"+str(len(Lcap))+'\n',file=fl)
+        print("Adjustment capcitors' ref List:\n",file=fl)
     elif (line == "<Netlist>\n") & (PG_state == 2):
         PG_state = 3
-        fl.writelines("Number of the adjsutment ref:"+str(len(Lpart))+'\n')
+        print("Number of the adjsutment ref:"+str(len(Lpart))+'\n',file=fl)
     elif line == "<End>":
         PG_state = -1
-        if Auto_PI_main(Lcap,Lpart,Net_input):
+        if PI_Auto_Lib1.Auto_PI_main(Lcap,Lpart,Net_input,PI_PATH,fl):
             print("Successful execution !\nConfigure file lines:",n)
         else:
             print("Failfure execution !\nConfigure file lines:",n)
@@ -39,7 +38,7 @@ for line in fo.readlines():
         fl.writelines(line)
     elif PG_state == 3:
         Net_input = line
-        fl.writelines("Input the net name:" + Net_input + '\n')
-
+        print("Input the net name:" + Net_input + '\n',file=fl)
+fl.close()
 fo.close()
 
