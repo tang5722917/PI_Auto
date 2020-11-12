@@ -4,6 +4,8 @@ PI_PATH = 'E://Project//Script//P//PY_Test//'
 os.chdir(PI_PATH)
 print(os.path.abspath('PI_Auto.py'))
 from PI_Auto import PI_Auto_Lib1
+import Auto_PI_main
+
 fo = open( PI_PATH+"Auto_PI.txt",'r')
 PG_state = 0
 Lcap = list()
@@ -26,7 +28,7 @@ for line in fo.readlines():
         print("Number of the adjsutment ref:"+str(len(Lpart))+'\n',file=fl)
     elif line == "<End>":
         PG_state = -1
-        if PI_Auto_Lib1.Auto_PI_main(Lcap,Lpart,Net_input,PI_PATH,fl):
+        if Auto_PI_main.Auto_PI_main(Lcap,Lpart,Net_input,PI_PATH,fl):
             print("Successful execution !\nConfigure file lines:",n)
         else:
             print("Failfure execution !\nConfigure file lines:",n)

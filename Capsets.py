@@ -28,10 +28,8 @@ class Capsets(object):
         return False
 
     def Generate_Netlsit(self,cPATH,f_netlsit):
-        n = 0
         f = PI_Auto_Lib1.txt(str(self.Num)+"_Netlist.sp","*"+str(self.Num)+"_Netlist",cPATH)
         for Net_line in f_netlsit.readlines():
-            n = n + 1
             Net_line = Net_line.strip()
             if len(Net_line) == 0:
                 print(Net_line,file=f)
@@ -46,6 +44,12 @@ class Capsets(object):
                 print(Net_line[0:tempN]+temp[0]+temp[1],file=f)
             else:
                 print(Net_line,file=f)
-
         f.close()
-        return n
+    
+    def Generate_Bash(self,cPATH):
+        str_bash = 'bs -os "RHEL6" -source /common/appl/dotfiles/hspice.CSHRC_2016.06-sp1 hspice '+str(self.Num)+'_Netlist.sp'+'| tee '+str(self.Num)+'_Netlist.log'
+        print(str_bash)
+        f = PI_Auto_Lib1.txt(str(self.Num)+"_Netlist.csh",str_bash,cPATH)
+        f.close()
+
+    
