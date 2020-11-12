@@ -17,3 +17,35 @@ class Capsets(object):
         for caps in self.capset:
             print(str(caps).replace('\\n', ''),file=f)
         f.close()
+    def Is_cap_in_Netline(self,Line):
+        for caps in self.capset:
+            cap_l = str(caps[0])
+            ref_l = str(caps[1])
+            cap_l = cap_l.strip()
+            ref_l = ref_l.strip()
+            if cap_l in Line:
+                return cap_l,ref_l
+        return False
+
+    def Generate_Netlsit(self,cPATH,f_netlsit):
+        n = 0
+        f = PI_Auto_Lib1.txt(str(self.Num)+"_Netlist.sp","*"+str(self.Num)+"_Netlist",cPATH)
+        for Net_line in f_netlsit.readlines():
+            n = n + 1
+            Net_line = Net_line.strip()
+            if len(Net_line) == 0:
+                print(Net_line,file=f)
+            elif Net_line[0] == '*':
+                print(Net_line,file=f)
+            elif "xmcap" not in Net_line :
+                print(Net_line,file=f)
+            elif Capsets.Is_cap_in_Netline(self,Net_line):
+                temp = Capsets.Is_cap_in_Netline(self,Net_line)
+                tempN = Net_line.find(temp[0],10)
+                print("*"+Net_line,file=f)
+                print(Net_line[0:tempN]+temp[0]+temp[1],file=f)
+            else:
+                print(Net_line,file=f)
+
+        f.close()
+        return n

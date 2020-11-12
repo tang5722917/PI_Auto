@@ -43,10 +43,17 @@ def Auto_PI_main(Lcap,Lpart,Net_input,PATH,fl):
     print(PATH)
     for i in range(0,len(capsets)):
         print("Number of capset:",i)
-        capsets[i].print_capsets()
         capsets[i].Generate_Capsetlsit(caplist_PATH)
     os.chdir(PATH)
     print("Successful generate capsets list !\n Number of capsets list",i+1,file=fl)
     #生成新的网表.sp文件
-
+    mkdir(PATH+"Netlist")
+    Netlist_PATH = PATH+"Netlist//"
+    Net_f = open(Net_input.strip(),'r')
+    os.chdir(Netlist_PATH)
+    for i in range(0,len(capsets)):
+        capsets[i].Generate_Netlsit(Netlist_PATH,Net_f)
+        Net_f.seek(0)
+    Net_f.close()
+    os.chdir(PATH)
     return True
