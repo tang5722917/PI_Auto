@@ -19,3 +19,19 @@ def txt(filename,text,PATH):              #定义函数名
     print ('ok')
     return file
 
+def Get_PIData(fo):
+    Status = False
+    PI_data = list()
+    Is_PIdata_str = "ac analysis tnom"
+    for line in fo.readlines():
+        if (((Is_PIdata_str in line) == True) and (Status == False)):
+            Status = True
+        elif ((Status == True) and (('y' in line) == True)):
+            Status = False
+        elif Status:
+            PI_data.append(line.strip())
+        else:
+            continue
+    PI_data = PI_data[4:]
+    return PI_data
+

@@ -1,4 +1,5 @@
 import os
+import sys
 from PI_Auto import PI_Auto_Lib1
 
 class Capsets(object):
@@ -41,15 +42,33 @@ class Capsets(object):
                 temp = Capsets.Is_cap_in_Netline(self,Net_line)
                 tempN = Net_line.find(temp[0],10)
                 print("*"+Net_line,file=f)
-                print(Net_line[0:tempN]+temp[0]+temp[1],file=f)
+                print(Net_line[0:tempN]+temp[0]+' '+temp[1],file=f)
             else:
                 print(Net_line,file=f)
         f.close()
-    
+	
     def Generate_Bash(self,cPATH):
         str_bash = 'bs -os "RHEL6" -source /common/appl/dotfiles/hspice.CSHRC_2016.06-sp1 hspice '+str(self.Num)+'_Netlist.sp'+'| tee '+str(self.Num)+'_Netlist.log'
         print(str_bash)
         f = PI_Auto_Lib1.txt(str(self.Num)+"_Netlist.csh",str_bash,cPATH)
         f.close()
-
+	
+    def Perform_Bash(self,cPATH):
+        Perform_str='csh '+cPATH+str(self.Num)+'_Netlist.csh'
+        os.system(Perform_str)
+	
+    def Return_Peak(self,cPATH):
+        PI_Fre = list()
+        PI_Mag = list()
+        Filename_log = cPATH+'SIM_Log\\'+str(self.Num)+'_Netlist.log'
+        fo_PIdata = open(Filename_log,'r')
+        PI_data = PI_Auto_Lib1.Get_PIData(fo_PIdata)
+        for data in PI_data:
+            temp = str(data).split()
+            PI_Fre.append(float(temp[0]))
+            PI_Mag.append(float(temp[1]))
+        Mag_Peak = max(PI_Mag)
+        Fre_Peak = PI_Fre[PI_Mag.index(Mag_Peak)]
+        fo_PIdata.close()
+        return Fre_Peak,Mag_Peak
     

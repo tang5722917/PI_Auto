@@ -42,8 +42,31 @@ def Auto_PI_main(Lcap,Lpart,Net_input,PATH,fl):
     #生成.sp文件执行脚本
     for i in range(0,len(capsets)):
         capsets[i].Generate_Bash(Netlist_PATH)
-        
+    '''
     #执行.sp文件执行脚本
-
+    for i in range(0,len(capsets)):
+        capsets[i].Perform_Bash(Netlist_PATH)
+    PI_Auto_Lib1.mkdir(PATH+"SIM_Wave")
+    PI_Auto_Lib1.mkdir(PATH+"SIM_Log")
+    os.system("mv *log ../SIM_Log")
+    os.system("mv *ac0 ../SIM_Wave")
+    os.system("mv *pa0 ../SIM_Wave")
+    os.system("mv *ic0 ../SIM_Wave")
+    os.system("mv *sc0 ../SIM_Wave")
+    os.system("mv *st0 ../SIM_Wave")
     os.chdir(PATH)
+    '''
+    #处理结果数据
+    PIresult_Fre = list()
+    PIresult_Mag = list()
+    print("Start deal PI date.",file=fl)
+    for i in range(0,len(capsets)):
+        PI_peak=capsets[i].Return_Peak(PATH)
+        print("Netlsit"+str(i)+":"+"\nPeak Frequence:"+str(PI_peak[0])+"\nPeak Mag:"+str(PI_peak[1]),file=fl)
+        PIresult_Fre.append(PI_peak[0])
+        PIresult_Mag.append(PI_peak[1])
+    Min_peak = min(PIresult_Mag)
+    Min_Netlist = PIresult_Mag.index(Min_peak)
+    Min_Peak_Fre = PIresult_Fre[Min_Netlist]
+    print("Min peak Netlsit"+str(Min_Netlist)+":"+"\nMin Peak Frequence:"+str(Min_Peak_Fre )+"\nMin Peak Mag:"+str(Min_peak),file=fl)
     return True

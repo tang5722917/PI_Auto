@@ -1,6 +1,7 @@
 import os
 import time
-PI_PATH = 'E://Project//Script//P//PY_Test//'
+#PI_PATH = '/design02/DDR_SIM/V3MSLT_PI/PI_Test/PI_Test1/Test/'
+PI_PATH = 'E:\\Project\\Script\\P\\PY_Test\\'
 os.chdir(PI_PATH)
 print(os.path.abspath('PI_Auto.py'))
 from PI_Auto import PI_Auto_Lib1
