@@ -1,5 +1,6 @@
 import os
 import time
+#当前目录地址 pwd
 #PI_PATH = '/design02/DDR_SIM/V3MSLT_PI/PI_Test/PI_Test1/Test/'
 PI_PATH = 'E:\\Project\\Script\\P\\PY_Test\\'
 os.chdir(PI_PATH)

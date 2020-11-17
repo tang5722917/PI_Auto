@@ -60,7 +60,7 @@ class Capsets(object):
     def Return_Peak(self,cPATH):
         PI_Fre = list()
         PI_Mag = list()
-        Filename_log = cPATH+'SIM_Log\\'+str(self.Num)+'_Netlist.log'
+        Filename_log = cPATH+'SIM_Log/'+str(self.Num)+'_Netlist.log'
         fo_PIdata = open(Filename_log,'r')
         PI_data = PI_Auto_Lib1.Get_PIData(fo_PIdata)
         for data in PI_data:
