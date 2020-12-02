@@ -42,3 +42,23 @@ def Is_Netlist_No_execute(PATH,Filename):
         return False
     else:return True
 
+def Deal_caplist(caplist,add_caplist):
+    new_list = list()
+    new_cap1 = list()
+    new_cap2 = list()
+    N_cap = len(caplist)
+    N_add = len(add_caplist)
+    for i in range(0,N_cap):
+        for k in range(0,len(caplist[i])):
+            new_cap1.append(caplist[i][k])
+        for j in  range(0,N_add):
+            new_cap2 = new_cap1.copy()
+            for k in range(0,len(add_caplist[j])):
+                new_cap2.append(add_caplist[j][k])
+            new_list.append(new_cap2.copy())
+            new_cap2.clear
+        new_cap1.clear()
+    return new_list
+
+    
+

@@ -8,7 +8,9 @@ class Capsets(object):
         self.Num = Num
     def __str__(self):
         return '(%s,%s)' %(self.capset)
-
+    def Add_cap(self,cap):
+        self.capset.append(cap)
+        self.Num = self.Num + 1
     def print_capsets(self):
         for caps in self.capset:
             print(self.Num,": Ref:",caps[0],"Partnumber:",caps[1])
