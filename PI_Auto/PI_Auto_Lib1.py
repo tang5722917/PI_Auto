@@ -1,5 +1,5 @@
 import os
-
+import os.path
 
 def mkdir(path):
 	folder = os.path.exists(path)
@@ -34,4 +34,11 @@ def Get_PIData(fo):
             continue
     PI_data = PI_data[4:]
     return PI_data
+
+def Is_Netlist_No_execute(PATH,Filename):
+    if os.path.isfile(PATH+"Netlist//"+Filename+".ac0"):
+        return False
+    elif os.path.isfile(PATH+"SIM_Wave//"+Filename+".ac0"):
+        return False
+    else:return True
 

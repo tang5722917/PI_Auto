@@ -10,6 +10,7 @@ def Auto_PI_main(Lcap,Lpart,Net_input,PATH,fl):
     NLc=len(Lcap)
     NLp=len(Lpart)
     captemp = list(itertools.product(Lcap,repeat=NLp))
+    
     #完成capsets对象初始化
     for i in range(0,len(captemp)):
         for j in range(0,NLp):
@@ -38,14 +39,16 @@ def Auto_PI_main(Lcap,Lpart,Net_input,PATH,fl):
         capsets[i].Generate_Netlsit(Netlist_PATH,Net_f)
         Net_f.seek(0)
     Net_f.close()
-    print("Successful generate Netlist !\n Number of capsets list",i+1,file=fl)
+    print("Successfully generate Netlist !\n Number of capsets list",i+1,file=fl)
     #生成.sp文件执行脚本
     for i in range(0,len(capsets)):
         capsets[i].Generate_Bash(Netlist_PATH)
-    '''
+
     #执行.sp文件执行脚本
     for i in range(0,len(capsets)):
-        capsets[i].Perform_Bash(Netlist_PATH)
+        if PI_Auto_Lib1.Is_Netlist_No_execute(PATH,str(i)+'_Netlist'):
+            capsets[i].Perform_Bash(Netlist_PATH)
+        print("Successfully execute Netlist: "+str(i),file=fl) 
     PI_Auto_Lib1.mkdir(PATH+"SIM_Wave")
     PI_Auto_Lib1.mkdir(PATH+"SIM_Log")
     os.system("mv *log ../SIM_Log")
@@ -55,7 +58,7 @@ def Auto_PI_main(Lcap,Lpart,Net_input,PATH,fl):
     os.system("mv *sc0 ../SIM_Wave")
     os.system("mv *st0 ../SIM_Wave")
     os.chdir(PATH)
-    '''
+
     #处理结果数据
     PIresult_Fre = list()
     PIresult_Mag = list()
