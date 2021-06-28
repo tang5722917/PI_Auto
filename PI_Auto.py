@@ -43,9 +43,9 @@ for line in fo.readlines():
         partN.clear()
     elif (line == "<Netlist>\n") & (PG_state == 1):
         PG_state = 5
-    elif line == "<End>":
+    elif line == "<End>\n":
         PG_state = -1
-        if Auto_PI_main.Auto_PI_main(Set_N,Lcap,Lpart,Net_input,PI_PATH,fl):
+        if (Auto_PI_main.Auto_PI_main(Set_N,Lcap,Lpart,Net_input,PI_PATH,fl)):
             print("Successful execution !\nConfigure file lines:",n)
         else:
             print("Failfure execution !\nConfigure file lines:",n)
@@ -63,8 +63,9 @@ for line in fo.readlines():
         Net_input = line
         print(Net_input)
         print("Input the net name:" + Net_input + '\n',file=fl)
+        PG_state = 6
     else:
-        print("Error"+str(line),file=fl)
+        print("End"+str(line),file=fl)
 fl.close()
 fo.close()
 

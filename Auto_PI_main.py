@@ -44,8 +44,8 @@ def Auto_PI_main(SetN,Lcap,Lpart,Net_input,PATH,fl):
         capset.clear()
 
     #生成capsets list
-    PI_Auto_Lib1.mkdir(PATH+"Capset list")
-    caplist_PATH = PATH+"Capset list//"
+    PI_Auto_Lib1.mkdir(PATH+"Capset_list")
+    caplist_PATH = PATH+"Capset_list//"
     os.chdir(caplist_PATH)
     print(PATH)
     for i in range(0,len(capsets)):
@@ -66,8 +66,7 @@ def Auto_PI_main(SetN,Lcap,Lpart,Net_input,PATH,fl):
     #生成.sp文件执行脚本
     for i in range(0,len(capsets)):
         capsets[i].Generate_Bash(Netlist_PATH)
-    return True
-'''
+
     #执行.sp文件执行脚本
     for i in range(0,len(capsets)):
         if PI_Auto_Lib1.Is_Netlist_No_execute(PATH,str(i)+'_Netlist'):
@@ -96,5 +95,5 @@ def Auto_PI_main(SetN,Lcap,Lpart,Net_input,PATH,fl):
     Min_Netlist = PIresult_Mag.index(Min_peak)
     Min_Peak_Fre = PIresult_Fre[Min_Netlist]
     print("Min peak Netlsit"+str(Min_Netlist)+":"+"\nMin Peak Frequence:"+str(Min_Peak_Fre )+"\nMin Peak Mag:"+str(Min_peak),file=fl)
-    return True
-'''
+
+    return Ture
