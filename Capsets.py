@@ -73,4 +73,24 @@ class Capsets(object):
         Fre_Peak = PI_Fre[PI_Mag.index(Mag_Peak)]
         fo_PIdata.close()
         return Fre_Peak,Mag_Peak
-    
+
+    def Return_Peak_Fre_Greater(self,cPATH,Fre):
+        PI_Fre = list()
+        PI_Mag = list()
+        Filename_log = cPATH+'SIM_Log/'+str(self.Num)+'_Netlist.log'
+        fo_PIdata = open(Filename_log,'r')
+        PI_data = PI_Auto_Lib1.Get_PIData(fo_PIdata)
+        for data in PI_data:
+            temp = str(data).split()
+            PI_Fre.append(float(temp[0]))
+            PI_Mag.append(float(temp[1]))
+        for data_Fre in PI_Fre :
+            if data_Fre > Fre :
+                Fre_Num = PI_Fre.index(data_Fre)
+                break
+        PI_Mag_Fre = PI_Mag[Fre_Num :]
+        PI_Fre_Fre = PI_Fre[Fre_Num :]
+        Mag_Peak = max(PI_Mag_Fre)
+        Fre_Peak = PI_Fre_Fre[PI_Mag_Fre.index(Mag_Peak)]
+        fo_PIdata.close()
+        return Fre_Peak,Mag_Peak 
